@@ -7,3 +7,5 @@ The CNN-model to be used is stored in the folder "net_save/" as well as the valu
 To infer the model, one needs to take into account the "mask.npy" file that contains a mask that should be multipled by the spectrum on which the prediction is made. 
 
 The script "pred_AVG.py" presents the steps to follow to obtain a prediction on the averaged model. Whereas, the script "pred_MC_dropout.py" shows how to produce results through a Monte Carlo drop out approach. 
+
+A test dataset can be found at : https://drive.google.com/drive/folders/1MUiaNZUgrn1qD35LoDaqA9bu3qw6ZUwg?usp=share_link 
