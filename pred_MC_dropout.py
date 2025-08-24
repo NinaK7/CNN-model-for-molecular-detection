@@ -77,6 +77,6 @@ load_iteration = 99
 cnn.load(path_cnn + "net0_s%04d.dat"%load_iteration, load_iteration, bin=1) # weights loading
 cnn.forward(drop_mode='MC_MODEL',no_error = 1, repeat=1, saving=2, silent=1) # Forward propagation 
 
-pred = np.fromfile("./fwd_res/net0_%04d.dat"%(load_iteration), dtype='float32')
-pred = np.reshape(pred,(nb_data_MC,nb_mol+1))
+pred = np.fromfile("./fwd_res/net0_%04d.dat"%(load_iteration), dtype='float32') # loading of the prediction
+pred = np.reshape(pred,(nb_data_MC,nb_mol+1)) # reshaping of the prediction according to the classes
 
