@@ -15,7 +15,7 @@ def i_ar(int_list): # function to conversion numbers to integers
 def f_ar(float_list): # function to conversion numbers to float32
 	return np.array(float_list, dtype="float32")
 
-def transfo(data_set, target) : # normalization of the data according to three transformations
+def transfo(data_set) : # normalization of the data according to three transformations
 	shape = data_set.shape
 	data_3chan = np.zeros((shape[0], 3*shape[1])) 
 
@@ -34,7 +34,7 @@ def transfo(data_set, target) : # normalization of the data according to three t
 	# polynomial normalization
 	data_3chan[:, 2*shape[1]:] = data_norm**3
 	
-	return data_3chan, target
+	return data_3chan
 	
 # list of molecules to be detected, the results will be given following to this classification
 molecules = ['aGg\'-(CH2OH)2','C2H3CN','C2H5CN','C2H5OH','C3H7CN','CH3CCH','CH3CHO','CH3CN','CH3COCH3', 
@@ -60,7 +60,8 @@ path_test = 'TEST_DATASET/TEST.unconstrained/'
 data[ratio_set:] = np.load(path_test + "data_test.npy")#[ratio_set:]
 target[ratio_set:] = np.load(path_test + "target_test.npy")#[ratio_set:]
 
-data, target =  transfo(data, target) # normalization of the full test dataset
+mask = np.load('./mask.npy') # loading of the mask
+data, target =  transfo(data*mask) # normalization of the full test dataset multiplied by the mask
     
 
 ############################################################################
