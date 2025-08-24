@@ -54,11 +54,11 @@ data = np.nan_to_num(np.load(path_test + "spectrum_to_test.npy")) # needs to be 
 target = np.zeros((nb_data, nb_mol)) # targets to zero
 
 mask = np.load('./mask.npy') # mask loading
-data_norm, target =  transfo(data*mask) # normalization of the spectrum
+data_norm, target =  transfo(data*mask) # normalization of the spectrum multiplied by the mask
 
 nb_data_MC = 100 # number of realizations to be done
 target_MC = np.zeros((nb_data_MC, nb_mol)) # targets to zero
-data_MC = np.tile(data_norm, (nb_data_MC, 1)) # production of an array with nb_data_MC times the same spectrum
+data_MC = np.tile(data_norm, (nb_data_MC, 1)) # production of an array with nb_data_MC times the same normalized spectrum
 
 ############################################################################
 ##               CIANNA network construction and use
