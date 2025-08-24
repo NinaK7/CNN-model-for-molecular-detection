@@ -35,10 +35,11 @@ def transfo(data_set, target) : # normalization of the data according to three t
 	data_3chan[:, 2*shape[1]:] = data_norm**3
 	
 	return data_3chan, target
-
+	
+# list of molecules to be detected, the results will be given following to this classification
 molecules = ['aGg\'-(CH2OH)2','C2H3CN','C2H5CN','C2H5OH','C3H7CN','CH3CCH','CH3CHO','CH3CN','CH3COCH3', 
 			'CH3NH2', 'CH3OCH3','CH3OCHO','CH3OH','CH2NH','gGg\'-(CH2OH)2','HCCCN', 'HC(O)NH2','t-HCOOH', 
-			'H2CS', 'NH2CN'] # list of molecules to be detected, the results will be given following to this classification
+			'H2CS', 'NH2CN'] 
 
 nb_mol = len(molecules)
 
@@ -79,8 +80,6 @@ cnn.forward(drop_mode='AVG_MODEL', no_error=1, saving=2) # CNN-model does a pred
 
 pred = np.fromfile("fwd_res/net0_%04d.dat"%load_iteration, dtype='float32') # loading of the model scores given bien the CNN-model
 pred = np.reshape(pred,(nb_test,nb_mol+1)) # reshaping of the model score to the number of classes
-
-
 
 
 
