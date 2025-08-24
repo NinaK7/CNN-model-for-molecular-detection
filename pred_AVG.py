@@ -77,7 +77,7 @@ path_cnn = './net_save/' # path to the CNN-model
 load_iteration = 99 # model from the 99th iteration
 
 cnn.load(path + "net0_s%04d.dat"%load_iteration, load_iteration, bin=1) # CIANNA loads the CNN-model with all the weights 
-cnn.forward(drop_mode='AVG_MODEL', no_error=1, saving=2) # CNN-model does a prediction 
+cnn.forward(drop_mode='AVG_MODEL', no_error=1, saving=2) # Forward propagation 
 
 pred = np.fromfile("fwd_res/net0_%04d.dat"%load_iteration, dtype='float32') # loading of the model scores given bien the CNN-model
 pred = np.reshape(pred,(nb_test,nb_mol+1)) # reshaping of the model score to the number of classes
