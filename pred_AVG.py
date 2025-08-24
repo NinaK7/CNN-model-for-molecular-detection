@@ -2,20 +2,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
-sys.path.insert(0,'CIANNA/src/build/lib.linux-x86_64-cpython-311')
+sys.path.insert(0,'CIANNA/src/build/lib.linux-x86_64-cpython-311') # path to CIANNA version
 import CIANNA as cnn
 
 ############################################################################
 ##              Data reading (your mileage may vary)
 ############################################################################
 
-def i_ar(int_list):
+def i_ar(int_list): # function to conversion numbers to integers
 	return np.array(int_list, dtype="int")
 
-def f_ar(float_list):
+def f_ar(float_list): # function to conversion numbers to float32
 	return np.array(float_list, dtype="float32")
 
-def transfo(data_set, target) : #normalization
+def transfo(data_set, target) : # normalization of the data according to three transformations
 	shape = data_set.shape
 	data_3chan = np.zeros((shape[0], 3*shape[1])) 
 
@@ -38,26 +38,28 @@ def transfo(data_set, target) : #normalization
 
 molecules = ['aGg\'-(CH2OH)2','C2H3CN','C2H5CN','C2H5OH','C3H7CN','CH3CCH','CH3CHO','CH3CN','CH3COCH3', 
 			'CH3NH2', 'CH3OCH3','CH3OCHO','CH3OH','CH2NH','gGg\'-(CH2OH)2','HCCCN', 'HC(O)NH2','t-HCOOH', 
-			'H2CS', 'NH2CN']
+			'H2CS', 'NH2CN'] # list of molecules to be detected, the results will be given following to this classification
 
 nb_mol = len(molecules)
 
-nb_test = 20000
-channels = 35000
+nb_test = 20000 # number of spectra to be tested
+channels = 35000 # number of channels within each spectrum
+
 data = np.zeros((nb_test, channels))
 target = np.zeros((nb_test, nb_mol))
+ratio_set = int(nb_test * 1/2) # 50% recipe and 50% unconstrained
 
-ratio_set = int(nb_test * 1/2)
-
-path_test = 'TEST_DATASET/TEST.recipe/'
+# loading of the recipe test dataset and the corresponding target
+path_test = 'TEST_DATASET/TEST.recipe/' 
 data[:ratio_set] = np.load(path_test + "data_test.npy")[:ratio_set]
 target[:ratio_set] = np.load(path_test + "target_test.npy")[:ratio_set]
 
+# loading of the unconstrained test dataset and the corresponding target
 path_test = 'TEST_DATASET/TEST.unconstrained/'
 data[ratio_set:] = np.load(path_test + "data_test.npy")#[ratio_set:]
 target[ratio_set:] = np.load(path_test + "target_test.npy")#[ratio_set:]
 
-data, target =  transfo(data, target)
+data, target =  transfo(data, target) # normalization of the full test dataset
     
 
 ############################################################################
@@ -65,17 +67,18 @@ data, target =  transfo(data, target)
 ############################################################################
 
 cnn.init(in_dim=i_ar([channels]), in_nb_ch=3, out_dim=nb_mol, \
-		bias=0.1, b_size=32, comp_meth="C_CUDA", dynamic_load=1, mixed_precision="FP32C_FP32A")
+		bias=0.1, b_size=32, comp_meth="C_CUDA", dynamic_load=1, mixed_precision="FP32C_FP32A") # initialization of the CNN backbone
 
-cnn.create_dataset("TEST", size=i_ar(nb_test), input=f_ar(data), target=f_ar(target*0))
+cnn.create_dataset("TEST", size=i_ar(nb_test), input=f_ar(data), target=f_ar(target*0)) # loading of the test dataset in CIANNA
 
-path_cnn = './net_save/'
-load_epoch = 99
+path_cnn = './net_save/' # path to the CNN-model
+load_iteration = 99 # model from the 99th iteration
 
-cnn.load(path + "net0_s%04d.dat"%load_epoch,load_epoch, bin=1)
-cnn.forward(drop_mode='AVG_MODEL', no_error=1, saving=2)
-pred = np.fromfile("fwd_res/net0_%04d.dat"%load_epoch, dtype='float32')
-pred = np.reshape(pred,(nb_test,nb_mol+1))
+cnn.load(path + "net0_s%04d.dat"%load_iteration, load_iteration, bin=1) # CIANNA loads the CNN-model with all the weights 
+cnn.forward(drop_mode='AVG_MODEL', no_error=1, saving=2) # CNN-model does a prediction 
+
+pred = np.fromfile("fwd_res/net0_%04d.dat"%load_iteration, dtype='float32') # loading of the model scores given bien the CNN-model
+pred = np.reshape(pred,(nb_test,nb_mol+1)) # reshaping of the model score to the number of classes
 
 
 
