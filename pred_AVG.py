@@ -6,7 +6,7 @@ sys.path.insert(0,'CIANNA/src/build/lib.linux-x86_64-cpython-311') # path to CIA
 import CIANNA as cnn
 
 ############################################################################
-##              Data reading (your mileage may vary)
+##              Data reading and normalizaton
 ############################################################################
 
 def i_ar(int_list): # function to conversion numbers to integers
