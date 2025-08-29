@@ -60,8 +60,8 @@ path_test = 'TEST_DATASET/TEST.unconstrained/'
 data[ratio_set:] = np.load(path_test + "data_test.npy")#[ratio_set:]
 target[ratio_set:] = np.load(path_test + "target_test.npy")#[ratio_set:]
 
-mask = np.load('./mask.npy') # loading of the mask
-data, target =  transfo(data*mask[:-1]) # normalization of the full test dataset multiplied by the mask
+mask = np.load('./mask.npy')[:-1] # loading of the mask
+data, target =  transfo(data*mask) # normalization of the full test dataset multiplied by the mask
     
 
 ############################################################################
