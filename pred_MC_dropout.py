@@ -53,7 +53,7 @@ nb_data = 1
 data = np.nan_to_num(np.load(path_test + "spectrum_to_test.npy")) # needs to be reshaped to (1, 35000) if it is not yet the case
 target = np.zeros((nb_data, nb_mol)) # targets to zero
 
-mask = np.load('./mask.npy') # mask loading
+mask = np.load('./mask.npy')[:-1] # mask loading
 data_norm, target =  transfo(data*mask) # normalization of the spectrum multiplied by the mask
 
 nb_data_MC = 100 # number of realizations to be done
