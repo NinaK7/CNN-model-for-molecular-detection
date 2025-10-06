@@ -1,9 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
-sys.path.insert(0,'/home/nkessler/CIANNA/src/build/lib.linux-x86_64-cpython-311')
-
-#sys.path.insert(0,'CIANNA/src/build/lib.linux-x86_64-cpython-311') # your path to CIANNA version
+sys.path.insert(0,'CIANNA/src/build/lib.linux-x86_64-cpython-311') # your path to CIANNA version
 import CIANNA as cnn
 
 ############################################################################
@@ -48,7 +46,7 @@ nb_mol = len(molecules)
 # loading of the spectrum to be tested
 path_test = './'
 nb_data = 1
-data = np.nan_to_num(np.load(path_test + "classical_hot_core_spectrum.npy")) # needs to be reshaped to (1, 35000) if it is not yet the case
+data = np.nan_to_num(np.load(path_test + "hot_core_spectrum.npy")) # needs to be reshaped to (1, 35000) if it is not yet the case
 
 
 data = np.reshape(data, (nb_data, channels))
