@@ -50,7 +50,7 @@ nb_mol = len(molecules)
 # loading of the spectrum to be tested
 path_test = './SPECTRA2TEST/'
 nb_data = 1
-data = np.nan_to_num(np.load(path_test + "classical_hot_core_spectrum.npy")) # needs to be reshaped to (1, 35000) if it is not yet the case
+data = np.nan_to_num(np.load(path_test + "hot_core_spectrum.npy")) # needs to be reshaped to (1, 35000) if it is not yet the case
 target = np.zeros((nb_data, nb_mol)) # targets to zero
 
 mask = np.load('./mask.npy')[:-1] # mask loading
