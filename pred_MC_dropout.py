@@ -54,7 +54,7 @@ data = np.nan_to_num(np.load(path_test + "classical_hot_core_spectrum.npy")) # n
 target = np.zeros((nb_data, nb_mol)) # targets to zero
 
 mask = np.load('./mask.npy')[:-1] # mask loading
-data_norm, target =  transfo(data*mask) # normalization of the spectrum multiplied by the mask
+data_norm =  transfo(data*mask) # normalization of the spectrum multiplied by the mask
 
 nb_data_MC = 100 # number of realizations to be done
 target_MC = np.zeros((nb_data_MC, nb_mol)) # targets to zero
