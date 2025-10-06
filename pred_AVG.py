@@ -73,9 +73,8 @@ cnn.init(in_dim=i_ar([channels]), in_nb_ch=3, out_dim=nb_mol, \
 
 cnn.create_dataset("TEST", size=i_ar(nb_test), input=f_ar(data), target=f_ar(target*0)) # loading of the test dataset in CIANNA
 
-path_cnn = './net_save/' # path to the weights of CNN-model
+path = './net_save/' # path to the weights of CNN-model
 load_iteration = 99 # model from the 99th iteration
-
 cnn.load(path + "net0_s%04d.dat"%load_iteration, load_iteration, bin=1) # CIANNA loads the CNN-model with all the weights 
 cnn.forward(drop_mode='AVG_MODEL', no_error=1, saving=2) # Forward propagation 
 
