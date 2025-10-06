@@ -8,4 +8,6 @@ To infer the model, one needs to take into account the "mask.npy" file that cont
 
 The script "pred_AVG.py" presents the steps to follow to obtain a prediction on the averaged model. Whereas, the script "pred_MC_dropout.py" shows how to produce results through a Monte Carlo drop out approach. 
 
+The file "hot_core_spectrum.npy" is an exemple of synthetic spectrum where all the molecules are detectable. 
+
 A test dataset can be found at : url to come 
