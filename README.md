@@ -8,4 +8,4 @@ To infer the model, one needs to take into account the "mask.npy" file that cont
 
 The script "pred_AVG.py" presents the steps to follow to obtain a prediction on the averaged model. Whereas, the script "pred_MC_dropout.py" shows how to produce results through a Monte Carlo drop out approach. 
 
-A test dataset can be found at : url will come once the paper is accepted
+A test dataset can be found at : url to come 
