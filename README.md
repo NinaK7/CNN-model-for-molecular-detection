@@ -10,4 +10,4 @@ The script "pred_AVG.py" presents the steps to follow to obtain a prediction on 
 
 The file "hot_core_spectrum.npy" is an exemple of synthetic spectrum where all the molecules are detectable. 
 
-A test dataset can be found at : url to come 
+A test dataset can be found at : https://zenodo.org/records/16899524?preview=1&token=eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjQ5NzgyZDhkLWE5NjgtNGQyYS1iZjgzLWFjMDEzZmEzNDBhNiIsImRhdGEiOnt9LCJyYW5kb20iOiJlZDczYzFjOTZkYWFhNzU2MWRmMTVhNWVjOGU0OWY4OCJ9.Zw0pqst9z0m0VvokEFTQI0t6x-Qjj2Q7Do1vfiVmfYwEA_i4DeD5Vyn5rXYCpV1lexe17tJ-JJWDIjQlOJYDVg
