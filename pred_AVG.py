@@ -1,9 +1,6 @@
 import sys
 from pathlib import Path
-
 import numpy as np
-
-
 sys.path.insert(0, 'CIANNA/src/build/lib.linux-x86_64-cpython-311')  # path to CIANNA version
 import CIANNA as cnn
 
@@ -68,8 +65,8 @@ target[:ratio_set] = np.load(recipe_path / "target_test.npy")[:ratio_set]
 
 # loading of the unconstrained test dataset and the corresponding target
 unconstrained_path = dataset_path / 'unconstrained'
-data[ratio_set:] = np.load(unconstrained_path / "data_test.npy")  # [ratio_set:]
-target[ratio_set:] = np.load(unconstrained_path / "target_test.npy")  # [ratio_set:]
+data[ratio_set:] = np.load(unconstrained_path / "data_test.npy")  
+target[ratio_set:] = np.load(unconstrained_path / "target_test.npy")  
 
 mask = np.load(model_path / 'mask.npy')[:-1]  # loading of the mask
 data = transfo(data * mask)  # normalization of the full test dataset multiplied by the mask
@@ -93,3 +90,6 @@ cnn.forward(drop_mode='AVG_MODEL', no_error=1, saving=2)  # Forward propagation
 pred = np.fromfile(f"fwd_res/net0_{load_iteration:04d}.dat",
                    dtype='float32')  # loading of the model scores given bien the CNN-model
 pred = np.reshape(pred, (nb_test, nb_mol + 1))  # reshaping of the model score to the number of classes
+
+print(molecules, pred)
+
