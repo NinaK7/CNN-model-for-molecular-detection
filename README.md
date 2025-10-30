@@ -5,9 +5,9 @@ Convolutional Neural Networks" (Kessler et al. 2025).
 
 # Framework
 
-Ones need to install the framework CIANNA (Cornu 2025) which can be found at: https://github.com/Deyht/CIANNA.
+Ones need to install the framework CIANNA (Cornu 2024) which can be found at: https://github.com/Deyht/CIANNA.
 
-This can be done by git-cloning this repository and by rynning :
+This can be done by git-cloning the current repository and by running :
 ```shell
 uv sync -U
 uv run pytest
