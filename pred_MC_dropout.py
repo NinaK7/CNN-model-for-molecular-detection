@@ -1,8 +1,8 @@
-import sys
-#from pathlib import Path
-import numpy as np
-#sys.path.insert(0, "CIANNA/src/build/lib.linux-x86_64-cpython-311")  # your path to CIANNA version
+from pathlib import Path
+
 import CIANNA as cnn
+import numpy as np
+from loguru import logger
 
 ############################################################################
 ##              Data reading and normalizaton
@@ -27,7 +27,9 @@ def transfo(data_set):  # normalization
     data_tanh = np.copy(data_set) * 0
     for i in range(shape[0]):
         data_norm[i] = data_norm[i] / np.max(data_norm[i])
-        data_tanh[i] = np.tanh(alpha * data_norm[i]) / np.max(np.tanh(alpha * data_norm[i]))
+        data_tanh[i] = np.tanh(alpha * data_norm[i]) / np.max(
+            np.tanh(alpha * data_norm[i])
+        )
 
     # linear normalization :
     data_3chan[:, : shape[1]] = data_norm
@@ -67,33 +69,40 @@ molecules = [
 nb_mol = len(molecules)
 
 # loading of the spectrum to be tested
-data_path = "data/"
-model_path = "model/"
+logger.info("Loading data")
+
+data_path = Path("data")
+model_path = data_path / "model"
 nb_data = 1
-data = np.nan_to_num(np.load(data_path + "spectrum/hot_core_spectrum.npy"))  # needs to be reshaped to (1, 35000) if it is not yet the case
+data = np.nan_to_num(
+    np.load(data_path / "spectrum" / "hot_core_spectrum.npy")
+)  # needs to be reshaped to (1, 35000) if it is not yet the case
 
 data = np.reshape(data, (nb_data, channels))
 target = np.zeros((nb_data, nb_mol))  # targets to zero
 
-mask = np.load(model_path + "mask.npy")[:-1]  # mask loading
+mask = np.load(model_path / "mask.npy")[:-1]  # mask loading
 data_norm = transfo(data * mask)  # normalization of the spectrum multiplied by the mask
 
 nb_data_MC = 100  # number of realizations to be done
 target_MC = np.zeros((nb_data_MC, nb_mol))  # targets to zero
-data_MC = np.tile(data_norm, (nb_data_MC, 1))  # production of an array with nb_data_MC times the same normalized spectrum
+data_MC = np.tile(
+    data_norm, (nb_data_MC, 1)
+)  # production of an array with nb_data_MC times the same normalized spectrum
 
 ############################################################################
 ##               CIANNA network construction and use
 ############################################################################
 
 # initialisation of the backbone
+logger.info("Initialize CIANNA")
 cnn.init(
     in_dim=i_ar([channels]),
     in_nb_ch=3,
     out_dim=nb_mol,
     bias=0.1,
     b_size=32,
-    comp_meth="C_BLAS",
+    comp_meth="C_CUDA",
     dynamic_load=1,
     mixed_precision="FP32C_FP32A",
     inference_only=1,
@@ -101,13 +110,32 @@ cnn.init(
 )
 
 # loading of the data to test by CIANNA
-cnn.create_dataset("TEST", size=i_ar(nb_data_MC), input=f_ar(data_MC), target=f_ar(target_MC))
+logger.info("CIANNA: `create_dataset`")
+cnn.create_dataset(
+    "TEST", size=i_ar(nb_data_MC), input=f_ar(data_MC), target=f_ar(target_MC)
+)
 
-load_iteration = 99  # iteration corresponding to the CNN-model weights to be loaded
-cnn.load(model_path + "net0_s%04d.dat"%load_iteration, load_iteration, bin=1)  # weights loading
-cnn.forward(drop_mode="MC_MODEL", no_error=1, repeat=1, saving=2, silent=1)  # Forward propagation
+path_cnn_model = data_path / "model"  # path to the CNN-model weights
+load_iteration = 99  # iteration to be load
 
-pred = np.fromfile("./fwd_res/net0_%04d.dat"%(load_iteration), dtype='float32')  # loading of the prediction
-pred = np.reshape(pred, (nb_data_MC, nb_mol + 1))  # reshaping of the prediction according to the classes
+logger.info("CIANNA: `load`")
+cnn.load(
+    (path_cnn_model / f"net0_s{load_iteration:04d}.dat").as_posix(),
+    load_iteration,
+    bin=1,
+)  # weights loading
 
+logger.info("CIANNA: `forward`")
+cnn.forward(
+    drop_mode="MC_MODEL", no_error=1, repeat=1, saving=2, silent=1
+)  # Forward propagation
+
+pred = np.fromfile(
+    f"./fwd_res/net0_{load_iteration:04d}.dat", dtype="float32"
+)  # loading of the prediction
+pred = np.reshape(
+    pred, (nb_data_MC, nb_mol + 1)
+)  # reshaping of the prediction according to the classes
+
+logger.info("Prediction:")
 print(molecules, pred)

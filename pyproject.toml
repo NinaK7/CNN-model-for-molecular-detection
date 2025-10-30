@@ -1,0 +1,31 @@
+[project]
+name = "cnn-model-for-molecular-detection"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+dependencies = [
+  "cianna",
+  "loguru>=0.7.3",
+  "matplotlib>=2.2.5",
+  "notebook>=7.4.7",
+  "numba>=0.60.0",
+  "numpy>=1.16.6",
+]
+
+[tool.uv]
+extra-build-variables = { cianna = { CIANNA_USE_CUDA = 'ON', CIANNA_USE_BLAS = 'ON', CIANNA_USE_OPENMP = 'ON', CIANNA_USE_LPTHREAD = 'ON' } }
+#extra-build-variables = { cianna = { CIANNA_USE_BLAS = 'ON', CIANNA_USE_OPENMP = 'ON', CIANNA_USE_LPTHREAD = 'ON' } }
+# extra-build-variables = { cianna = { CIANNA_USE_OPENMP = 'ON', CIANNA_USE_LPTHREAD = 'ON' } }
+
+[tool.uv.sources]
+cianna = { git = "https://github.com/Alexsaphir/CIANNA", rev = "am/feat-build-system" }
