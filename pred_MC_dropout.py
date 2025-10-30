@@ -1,7 +1,7 @@
 import sys
 from pathlib import Path
 import numpy as np
-sys.path.insert(0, "CIANNA/src/build/lib.linux-x86_64-cpython-311")  # your path to CIANNA version
+#sys.path.insert(0, "CIANNA/src/build/lib.linux-x86_64-cpython-311")  # your path to CIANNA version
 import CIANNA as cnn
 
 ############################################################################
@@ -94,7 +94,7 @@ cnn.init(
     out_dim=nb_mol,
     bias=0.1,
     b_size=32,
-    comp_meth="C_CUDA",
+    comp_meth="C_BLAS",
     dynamic_load=1,
     mixed_precision="FP32C_FP32A",
     inference_only=1,
