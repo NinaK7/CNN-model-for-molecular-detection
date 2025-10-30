@@ -67,7 +67,7 @@ molecules = [
 nb_mol = len(molecules)
 
 # loading of the spectrum to be tested
-data_path = "data/")
+data_path = "data/"
 model_path = "model/"
 nb_data = 1
 data = np.nan_to_num(np.load(data_path + "spectrum/hot_core_spectrum.npy"))  # needs to be reshaped to (1, 35000) if it is not yet the case
