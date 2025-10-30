@@ -1,5 +1,5 @@
 import sys
-from pathlib import Path
+#from pathlib import Path
 import numpy as np
 #sys.path.insert(0, "CIANNA/src/build/lib.linux-x86_64-cpython-311")  # your path to CIANNA version
 import CIANNA as cnn
@@ -67,16 +67,15 @@ molecules = [
 nb_mol = len(molecules)
 
 # loading of the spectrum to be tested
-data_path = Path("data")
-model_path = Path("model")
+data_path = "data/")
+model_path = "model/"
 nb_data = 1
-data = np.nan_to_num(np.load(data_path / "spectrum" / "hot_core_spectrum.npy"))  # needs to be reshaped to (1, 35000) if it is not yet the case
-
+data = np.nan_to_num(np.load(data_path + "spectrum/hot_core_spectrum.npy"))  # needs to be reshaped to (1, 35000) if it is not yet the case
 
 data = np.reshape(data, (nb_data, channels))
 target = np.zeros((nb_data, nb_mol))  # targets to zero
 
-mask = np.load(model_path / "mask.npy")[:-1]  # mask loading
+mask = np.load(model_path + "mask.npy")[:-1]  # mask loading
 data_norm = transfo(data * mask)  # normalization of the spectrum multiplied by the mask
 
 nb_data_MC = 100  # number of realizations to be done
@@ -105,10 +104,10 @@ cnn.init(
 cnn.create_dataset("TEST", size=i_ar(nb_data_MC), input=f_ar(data_MC), target=f_ar(target_MC))
 
 load_iteration = 99  # iteration corresponding to the CNN-model weights to be loaded
-cnn.load(model_path / f"net0_s{load_iteration:04d}.dat", load_iteration, bin=1)  # weights loading
+cnn.load(model_path + "net0_s%04d.dat"%load_iteration, load_iteration, bin=1)  # weights loading
 cnn.forward(drop_mode="MC_MODEL", no_error=1, repeat=1, saving=2, silent=1)  # Forward propagation
 
-pred = np.fromfile("./fwd_res/net0_{load_iteration:04d}.dat", dtype="float32")  # loading of the prediction
+pred = np.fromfile("./fwd_res/net0_%04d.dat"%(load_iteration), dtype='float32')  # loading of the prediction
 pred = np.reshape(pred, (nb_data_MC, nb_mol + 1))  # reshaping of the prediction according to the classes
 
 print(molecules, pred)
