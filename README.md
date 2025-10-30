@@ -16,7 +16,7 @@ which will create a 'cianna-demo' virtual environment. The framework can then be
 
 ```shell
 import CIANNA
-```.
+```
 
 # CNN-model
 
