@@ -104,12 +104,11 @@ cnn.init(
 # loading of the data to test by CIANNA
 cnn.create_dataset("TEST", size=i_ar(nb_data_MC), input=f_ar(data_MC), target=f_ar(target_MC))
 
-path_cnn_model = data_path / "model"  # path to the CNN-model weights
-load_iteration = 99  # iteration to be load
-cnn.load(path_cnn_model + "net0_s%04d.dat" % load_iteration, load_iteration, bin=1)  # weights loading
+load_iteration = 99  # iteration corresponding to the CNN-model weights to be loaded
+cnn.load(model_path / f"net0_{load_iteration:04d}.dat", load_iteration, bin=1)  # weights loading
 cnn.forward(drop_mode="MC_MODEL", no_error=1, repeat=1, saving=2, silent=1)  # Forward propagation
 
-pred = np.fromfile("./fwd_res/net0_%04d.dat" % (load_iteration), dtype="float32")  # loading of the prediction
+pred = np.fromfile("./fwd_res/net0_{load_iteration:04d}.dat", dtype="float32")  # loading of the prediction
 pred = np.reshape(pred, (nb_data_MC, nb_mol + 1))  # reshaping of the prediction according to the classes
 
 print(molecules, pred)
