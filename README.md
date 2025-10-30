@@ -12,7 +12,7 @@ This can be done by git-cloning the current repository and by running :
 uv sync -U
 uv run pytest
 ```
-which will create a 'cianna-demo' virtual environment. The framework can then be loaded with 
+which will create a 'cianna-demo' virtual environment. The framework can then be loaded in python with :
 
 ```shell
 import CIANNA
