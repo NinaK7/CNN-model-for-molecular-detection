@@ -10,12 +10,12 @@ Ones need to install the framework CIANNA (Cornu 2024) which can be found at: ht
 This can be done by git-cloning the current repository and by running :
 ```shell
 uv sync -U
-uv run pytest
 ```
 which will create a virtual environment where the framework can then be loaded in python with :
 
 ```shell
-import CIANNA
+uv run python
+>>> import CIANNA
 ```
 
 # CNN-model
