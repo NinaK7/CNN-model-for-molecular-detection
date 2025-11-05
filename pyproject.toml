@@ -23,7 +23,7 @@ dependencies = [
 ]
 
 [tool.uv]
-extra-build-variables = { cianna = { CIANNA_USE_CUDA = 'ON', CIANNA_USE_BLAS = 'ON', CIANNA_USE_OPENMP = 'ON', CIANNA_USE_LPTHREAD = 'ON' } }
+extra-build-variables = { cianna = { CIANNA_USE_CUDA = 'OFF', CIANNA_USE_BLAS = 'ON', CIANNA_USE_OPENMP = 'ON', CIANNA_USE_LPTHREAD = 'ON' } }
 #extra-build-variables = { cianna = { CIANNA_USE_BLAS = 'ON', CIANNA_USE_OPENMP = 'ON', CIANNA_USE_LPTHREAD = 'ON' } }
 # extra-build-variables = { cianna = { CIANNA_USE_OPENMP = 'ON', CIANNA_USE_LPTHREAD = 'ON' } }
 
