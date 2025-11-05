@@ -102,7 +102,7 @@ cnn.init(
     out_dim=nb_mol,
     bias=0.1,
     b_size=32,
-    comp_meth="C_CUDA",
+    comp_meth="C_BLAS",
     dynamic_load=1,
     mixed_precision="FP32C_FP32A",
     inference_only=1,
