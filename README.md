@@ -25,20 +25,20 @@ uv run python
 >>> import CIANNA
 ```
 
-# Datasets
+# Downloading the CNN-model and datasets
 
-Ones need to download the CNN-model from zenodo available at https://zenodo.org/records/16899524
+Ones need to download the model from zenodo available at https://zenodo.org/records/16899524
 
 To fetch the data and extract them in the correct place, you can run:
 ```shell
 uvx zenodo_get 16899524 -o data/
 
 unzip -n data/model.zip -d data
-unzip -n data/spectrum.zip -d data
 unzip -n data/test_dataset.zip -d data
+unzip -n data/spectrum.zip -d data
 ```
 
-In the later Zenodo repository, one can also find :
+In the later Zenodo repository, one can find :
 
 - The model and the mask needed for inference.
 
@@ -48,13 +48,11 @@ In the later Zenodo repository, one can also find :
 
 - The file "spectrum/hot_core_spectrum.npy" is an example of synthetic spectrum where all the molecules are detectable.
 
-# CNN-model
+# Using the CNN-model
 
 The [CNN-model](data/model/net0_s0099.dat) to be used is stored as "net0_s0099.dat" in the folder "data/model/".
 To infer the model, one needs to take into account the ["data/model/mask.npy"](data/model/mask.npy) file that contains a mask that should be
 multiplied by the spectrum on which the prediction is made.
-
-# Using the CNN-model
 
 The script "pred_AVG.py" presents the steps to follow to obtain a prediction on the averaged model.
 Whereas, the script "pred_MC_dropout.py" shows how to produce results through a Monte Carlo drop out approach.
