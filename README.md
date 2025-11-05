@@ -66,3 +66,7 @@ uv run python pred_AVG.py
 ```shell
 uv run python pred_MC_dropout.py
 ```
+
+The predictions are stored in the "fwd_res/" folder under the file "net0_0099.dat", which is replaced at each inference.
+
+If you have any issue or question regarding the use of the model, please contact : nina.kessler@u-bordeaux.fr.
