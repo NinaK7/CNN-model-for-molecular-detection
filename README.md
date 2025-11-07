@@ -67,6 +67,12 @@ uv run python pred_AVG.py
 uv run python pred_MC_dropout.py
 ```
 
+The output is an array which dimension is the number of spectra as a function of the number of molecules to be detected. The order of molecules is the one defined in the variable "molecules". For each molecule of each spectrum, the CNN-model gives a model score. 
+
 The predictions are stored in the "fwd_res/" folder under the file "net0_0099.dat", which is replaced at each inference.
+
+# Calibrating the model score into a detection probability
+
+The test dataset can be used to calibrate the model score into a detection probability by using the script "model_score_calibration.py". It computes on a sampled [0,1] interval the statistical probability for a prediction to actually be a true detection. 
 
 If you have any issue or question regarding the use of the model, please contact : nina.kessler@u-bordeaux.fr.
