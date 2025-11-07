@@ -139,3 +139,5 @@ pred = np.reshape(
 
 logger.info("Prediction:")
 print(molecules, pred)
+
+np.save('./fwd_res/pred_MC_dropout_spectrum.npy', pred)
