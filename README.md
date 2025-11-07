@@ -69,10 +69,13 @@ uv run python pred_MC_dropout.py
 
 The output is an array which dimension is the number of spectra as a function of the number of molecules to be detected. The order of molecules is the one defined in the variable "molecules". For each molecule of each spectrum, the CNN-model gives a model score. 
 
-The predictions are stored in the "fwd_res/" folder under the file "net0_0099.dat", which is replaced at each inference.
+The predictions are stored in the "fwd_res/" folder under the file "net0_0099.dat", which is replaced at each inference. 
+We added in the scripts an extra line to save the prediction in two news files : "./fwd_res/pred_AVG_test_dataset.npy" and "./fwd_res/pred_MC_dropout_spectrum.npy" respectively.
 
 # Calibrating the model score into a detection probability
 
-The test dataset can be used to calibrate the model score into a detection probability by using the script "model_score_calibration.py". It computes on a sampled [0,1] interval the statistical probability for a prediction to actually be a true detection. 
+The test dataset can be used to calibrate the model score into a detection probability by using the script "model_score_calibration.py". This script computes the statistical probability for a prediction to actually be a true detection by using the test dataset. In this example, the model scores obtained in "./fwd_res/pred_MC_dropout_spectrum.npy" are converted into probabilities. More details can be found in the script at commented lines.
+
+This script also includes the computation of the median absolute deviation (MAD) which is used to estimate the uncertainty on a MC drop out prediction.
 
 If you have any issue or question regarding the use of the model, please contact : nina.kessler@u-bordeaux.fr.
