@@ -144,3 +144,6 @@ pred = np.reshape(
 
 logger.info("Prediction:")
 print(molecules, pred)
+
+np.save('./fwd_res/pred_AVG_test_dataset', pred)
+
