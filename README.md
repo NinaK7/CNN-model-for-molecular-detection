@@ -78,4 +78,4 @@ The test dataset can be used to calibrate the model score into a detection proba
 
 This script also includes the computation of the median absolute deviation (MAD) which is used to estimate the uncertainty on a MC drop out prediction.
 
-If you have any issue or question regarding the use of the model, please contact : nina.kessler@u-bordeaux.fr.
+If you have any issue or question regarding the use of the model, please contact : nina.kessler.astro@gmail.com.
